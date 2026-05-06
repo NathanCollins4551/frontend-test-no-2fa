@@ -1,5 +1,5 @@
 const express = require('express');
-const https = require('https');
+const http = require('http');
 const router = express.Router();
 
 /**
@@ -7,7 +7,7 @@ const router = express.Router();
  * Pipes the external video feed to the frontend to avoid CORS/Mixed content issues
  */
 router.get('/video', (req, res) => {
-  const proxyReq = https.request('https://cv.nathancollins.xyz/api/tracking/video_feed', (proxyRes) => {
+  const proxyReq = http.request('http://localhost:8000/api/tracking/video_feed', (proxyRes) => {
     res.writeHead(proxyRes.statusCode, proxyRes.headers);
     proxyRes.pipe(res);
   });

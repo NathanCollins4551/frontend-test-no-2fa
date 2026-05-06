@@ -16,16 +16,21 @@ const defaultPrefs = {
 };
 
 function savePrefs() {
+  const getVal = (id, prop = 'value') => {
+    const el = document.getElementById(id);
+    return el ? el[prop] : (defaultPrefs[id.replace('pref-', '').replace(/-([a-z])/g, g => g[1].toUpperCase())] || '');
+  };
+
   const prefs = {
-    darkMode: document.getElementById('pref-dark-mode').checked,
-    accentColor: document.getElementById('pref-accent-color').value,
-    uiDensity: document.getElementById('pref-ui-density').value,
-    glowEffects: document.getElementById('pref-glow').checked,
-    notifTone: document.getElementById('pref-tone').value,
-    notifVolume: parseInt(document.getElementById('pref-volume').value),
-    autoDismiss: document.getElementById('pref-dismiss').value,
-    criticalOnly: document.getElementById('pref-critical-only').checked,
-    stopAlerts: document.getElementById('pref-stop-alerts').checked
+    darkMode: getVal('pref-dark-mode', 'checked'),
+    accentColor: getVal('pref-accent-color'),
+    uiDensity: getVal('pref-ui-density'),
+    glowEffects: getVal('pref-glow', 'checked'),
+    notifTone: getVal('pref-tone'),
+    notifVolume: parseInt(getVal('pref-volume')) || 70,
+    autoDismiss: getVal('pref-dismiss'),
+    criticalOnly: getVal('pref-critical-only', 'checked'),
+    stopAlerts: getVal('pref-stop-alerts', 'checked')
   };
   localStorage.setItem(PREFS_KEY, JSON.stringify(prefs));
   applyPrefs(prefs);

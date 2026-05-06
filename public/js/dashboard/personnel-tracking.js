@@ -117,7 +117,7 @@ async function fetchLiveTrackingData() {
     const samples = [];
     for (let i = 0; i < 3; i++) {
       try {
-        const response = await fetch('https://cv.nathancollins.xyz/api/tracking/live');
+        const response = await fetch('http://localhost:8000/api/tracking/live');
         if (response.ok) {
           const data = await response.json();
           samples.push(data.zone_counts);
