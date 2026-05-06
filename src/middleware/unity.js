@@ -29,24 +29,10 @@ const unityStatic = express.static(path.join(__dirname, '../../public/unity'), {
 });
 
 /**
- * Combined middleware for Unity assets including auth checks
+ * Combined middleware for Unity assets
  */
 const handleUnityAssets = (req, res, next) => {
-  const token = req.cookies?.token || req.headers.authorization?.split(' ')[1];
-  
-  // If no token and trying to access the main unity page, redirect to login
-  if (!token) {
-    const isMainPage = req.path === '/' || req.path === '/index.html' || req.path === '';
-    if (isMainPage) {
-      return res.redirect('/login');
-    }
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
-
-  // Use standard auth check and then serve static files
-  requireAuth(req, res, () => {
-    unityStatic(req, res, next);
-  });
+  unityStatic(req, res, next);
 };
 
 module.exports = { handleUnityAssets };

@@ -6,7 +6,6 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 
 // Internal Modules
-const authRoutes = require('./routes/auth');
 const apiRoutes = require('./routes/api');
 const pageRoutes = require('./routes/pages');
 const { securityHeaders } = require('./middleware/security');
@@ -37,7 +36,6 @@ app.use(cookieParser());
 app.use('/unity', handleUnityAssets);
 
 // 3. Application Routes
-app.use('/api/auth', authRoutes);
 app.use('/api', apiRoutes);
 app.use('/', pageRoutes);
 
@@ -51,9 +49,9 @@ app.use(express.static(path.join(__dirname, '../public'), {
 }));
 
 // 5. Fallback Handler (404)
-// Redirect unknown routes to login
+// Redirect unknown routes to dashboard
 app.use((req, res) => {
-  res.status(404).sendFile(path.join(__dirname, '../public/login.html'));
+  res.status(404).sendFile(path.join(__dirname, '../public/dashboard.html'));
 });
 
 // Start Server

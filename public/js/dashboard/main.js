@@ -1,29 +1,6 @@
 /**
- * Core Dashboard Logic - Navigation, Auth, and Page Handling
+ * Core Dashboard Logic - Navigation and Page Handling
  */
-
-// Auth check
-const token = localStorage.getItem('authToken');
-if (!token) window.location.href = '/login';
-
-// Load user info
-async function loadUser() {
-  try {
-    const res = await fetch('/api/auth/me', {
-      headers: { 'Authorization': `Bearer ${token}` },
-      credentials: 'include'
-    });
-    if (!res.ok) { 
-      localStorage.removeItem('authToken'); 
-      window.location.href = '/login'; 
-      return; 
-    }
-    const { user } = await res.json();
-    document.getElementById('navUsername').textContent = user.username;
-  } catch (err) {
-    console.error('Failed to load user info');
-  }
-}
 
 // Page switching
 function initNavigation() {
@@ -50,18 +27,6 @@ function initNavigation() {
       activePagePill.textContent = item.textContent.trim();
     });
   });
-}
-
-// Logout
-function initLogout() {
-  const logoutBtn = document.getElementById('logoutBtn');
-  if (logoutBtn) {
-    logoutBtn.addEventListener('click', async () => {
-      await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' }).catch(() => {});
-      localStorage.removeItem('authToken');
-      window.location.href = '/login';
-    });
-  }
 }
 
 // Unity Interaction
@@ -116,9 +81,7 @@ window.showHowTo = showHowTo;
 
 // Initialization
 document.addEventListener('DOMContentLoaded', () => {
-  loadUser();
   initNavigation();
-  initLogout();
   initUnity();
   
   // Load specialized modules
