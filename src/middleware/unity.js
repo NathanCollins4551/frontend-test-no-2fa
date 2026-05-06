@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const { requireAuth } = require('./auth');
 
 /**
  * Middleware for serving Unity WebGL files with proper headers

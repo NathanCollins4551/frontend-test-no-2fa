@@ -1,6 +1,6 @@
 # MakerSpace Digital Twin — Frontend
 
-A high-performance, security-hardened web portal for real-time 3D visualization, personnel tracking, and AI-driven industrial management. This project serves as the interface for the MakerSpace Digital Twin ecosystem.
+A high-performance, security-hardened web portal for real-time 3D visualization, personnel tracking, and AI-driven industrial management. This project serves as a direct-access interface for the MakerSpace Digital Twin ecosystem.
 
 ##  Tech Stack
 
@@ -11,26 +11,12 @@ A high-performance, security-hardened web portal for real-time 3D visualization,
 *   **Visualization:** HTML5 Canvas API (Personnel Visualizer)
 *   **Styling:** Modern Vanilla CSS (Modular)
 
-### Security & Authentication
-*   **Identity:** JWT (JSON Web Tokens) with `jsonwebtoken` (9.0.2)
-*   **Middleware:** Helmet.js for CSP and security header enforcement
-*   **Encryption:** Cookie-based session persistence with `HttpOnly` and `Secure` flags
-*   **Validation:** Multi-factor Authentication (2FA) integration with backend coordination
-
 ---
 
-## Security Architecture
+## Architecture
 
-### Authentication Flow
-The system implements a robust proxy-authentication model:
-1.  **Handshake:** Frontend captures credentials and normalizes them for the backend API.
-2.  **2FA Challenge:** During login, the backend may issue a 2FA requirement. The frontend manages the verification state machine across `login.html` and `verify-2fa.html`.
-3.  **Cookie Management:** 
-    *   **Local Token:** Upon successful auth, a `token` cookie is set (HttpOnly) for frontend session management.
-    *   **Backend Forwarding:** Backend-issued cookies (e.g., `trusted_device`) are transparently forwarded to ensure seamless multi-service identity.
-4.  **Protected Routes:** 
-    *   **Server-Side:** `requireAuth` middleware protects HTML pages and the `/unity` asset directory.
-    *   **Asset Protection:** Unity WebGL files are served only after token validation to prevent unauthorized access to proprietary 3D models.
+### Direct Access
+The system is configured for direct access to the dashboard without a login requirement. This is intended for dedicated monitoring stations and local testing environments.
 
 ### Cross-Origin Isolation
 To support `SharedArrayBuffer` (required by modern Unity builds), the server enforces strict COOP/COEP/CORP headers:
